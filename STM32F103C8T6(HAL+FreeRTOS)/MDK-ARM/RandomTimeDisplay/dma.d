@@ -1,0 +1,34 @@
+randomtimedisplay\dma.o: ../Core/Src/dma.c
+randomtimedisplay\dma.o: ../Core/Inc/dma.h
+randomtimedisplay\dma.o: ../Core/Inc/main.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
+randomtimedisplay\dma.o: ../Core/Inc/stm32f1xx_hal_conf.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Include/core_cm3.h
+randomtimedisplay\dma.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdint.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Include/cmsis_version.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+randomtimedisplay\dma.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+randomtimedisplay\dma.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stddef.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+randomtimedisplay\dma.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
