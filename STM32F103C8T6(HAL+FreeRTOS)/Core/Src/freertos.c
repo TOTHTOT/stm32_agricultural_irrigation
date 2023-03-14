@@ -34,6 +34,7 @@
 #include "string.h"
 #include <stdio.h>
 #include "usart1.h"
+#include "dht11.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,82 +67,82 @@ osSemaphoreId Usart1_Receive_BinSemaphoreHandle;
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const * argument);
-void led_task(void const * argument);
-void key_task(void const * argument);
-void usart1_task(void const * argument);
+void StartDefaultTask(void const *argument);
+void led_task(void const *argument);
+void key_task(void const *argument);
+void usart1_task(void const *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
 static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
 
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
 {
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+    *ppxIdleTaskStackBuffer = &xIdleStack[0];
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+    /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /**
-  * @brief  FreeRTOS initialization
-  * @param  None
-  * @retval None
-  */
-void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
+ * @brief  FreeRTOS initialization
+ * @param  None
+ * @retval None
+ */
+void MX_FREERTOS_Init(void)
+{
+    /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
+    /* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
+    /* USER CODE BEGIN RTOS_MUTEX */
     /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
+    /* USER CODE END RTOS_MUTEX */
 
-  /* Create the semaphores(s) */
-  /* definition and creation of Usart1_Receive_BinSemaphore */
-  osSemaphoreDef(Usart1_Receive_BinSemaphore);
-  Usart1_Receive_BinSemaphoreHandle = osSemaphoreCreate(osSemaphore(Usart1_Receive_BinSemaphore), 1);
+    /* Create the semaphores(s) */
+    /* definition and creation of Usart1_Receive_BinSemaphore */
+    osSemaphoreDef(Usart1_Receive_BinSemaphore);
+    Usart1_Receive_BinSemaphoreHandle = osSemaphoreCreate(osSemaphore(Usart1_Receive_BinSemaphore), 1);
 
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
+    /* USER CODE BEGIN RTOS_SEMAPHORES */
     /* add semaphores, ... */
     xSemaphoreTake(Usart1_Receive_BinSemaphoreHandle, portMAX_DELAY);
-  /* USER CODE END RTOS_SEMAPHORES */
+    /* USER CODE END RTOS_SEMAPHORES */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
+    /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+    /* USER CODE END RTOS_TIMERS */
 
-  /* USER CODE BEGIN RTOS_QUEUES */
+    /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
+    /* USER CODE END RTOS_QUEUES */
 
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+    /* Create the thread(s) */
+    /* definition and creation of defaultTask */
+    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+    defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of LED_TASK */
-  osThreadDef(LED_TASK, led_task, osPriorityLow, 0, 128);
-  LED_TASKHandle = osThreadCreate(osThread(LED_TASK), NULL);
+    /* definition and creation of LED_TASK */
+    osThreadDef(LED_TASK, led_task, osPriorityLow, 0, 128);
+    LED_TASKHandle = osThreadCreate(osThread(LED_TASK), NULL);
 
-  /* definition and creation of KEY_TASK */
-  osThreadDef(KEY_TASK, key_task, osPriorityLow, 0, 128);
-  KEY_TASKHandle = osThreadCreate(osThread(KEY_TASK), NULL);
+    /* definition and creation of KEY_TASK */
+    osThreadDef(KEY_TASK, key_task, osPriorityLow, 0, 128);
+    KEY_TASKHandle = osThreadCreate(osThread(KEY_TASK), NULL);
 
-  /* definition and creation of USART1_TASK */
-  osThreadDef(USART1_TASK, usart1_task, osPriorityLow, 0, 256);
-  USART1_TASKHandle = osThreadCreate(osThread(USART1_TASK), NULL);
+    /* definition and creation of USART1_TASK */
+    osThreadDef(USART1_TASK, usart1_task, osPriorityLow, 0, 256);
+    USART1_TASKHandle = osThreadCreate(osThread(USART1_TASK), NULL);
 
-  /* USER CODE BEGIN RTOS_THREADS */
+    /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
+    /* USER CODE END RTOS_THREADS */
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -151,15 +152,15 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+void StartDefaultTask(void const *argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */
-    /* Infinite loop */
-    for (;;)
+    /* USER CODE BEGIN StartDefaultTask */
+    if (dht11_init() != 0)
     {
-        osDelay(1);
+        DEBUG_PRINT("dht11_init() failed!!\r\n");
     }
-  /* USER CODE END StartDefaultTask */
+    vTaskDelete(NULL);
+    /* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_led_task */
@@ -169,17 +170,27 @@ void StartDefaultTask(void const * argument)
  * @retval None
  */
 /* USER CODE END Header_led_task */
-void led_task(void const * argument)
+void led_task(void const *argument)
 {
-  /* USER CODE BEGIN led_task */
+    /* USER CODE BEGIN led_task */
     /* Infinite loop */
     for (;;)
     {
-        INFO_PRINT("led\r\n");
+#define TEST_DHT11
+#ifdef TEST_DHT11
+        if(g_dht11_device_st.get_dat11_data(&g_dht11_device_st.dht11_data_temprature,&g_dht11_device_st.dht11_data_humidity) == 0)
+        {
+            INFO_PRINT("wd:%d, sd:%d\r\n", g_dht11_device_st.dht11_data_temprature, g_dht11_device_st.dht11_data_humidity);
+        }
+        else
+        {
+            ERROR_PRINT("get dht11 data error\r\n");
+        }
+#endif /* TEST_MODE */
         LED0_TOGGLE;
         delay_ms(500);
     }
-  /* USER CODE END led_task */
+    /* USER CODE END led_task */
 }
 
 /* USER CODE BEGIN Header_key_task */
@@ -189,16 +200,16 @@ void led_task(void const * argument)
  * @retval None
  */
 /* USER CODE END Header_key_task */
-void key_task(void const * argument)
+void key_task(void const *argument)
 {
-  /* USER CODE BEGIN key_task */
+    /* USER CODE BEGIN key_task */
     /* Infinite loop */
     for (;;)
     {
 
         osDelay(1);
     }
-  /* USER CODE END key_task */
+    /* USER CODE END key_task */
 }
 
 /* USER CODE BEGIN Header_usart1_task */
@@ -208,9 +219,9 @@ void key_task(void const * argument)
  * @retval None
  */
 /* USER CODE END Header_usart1_task */
-void usart1_task(void const * argument)
+void usart1_task(void const *argument)
 {
-  /* USER CODE BEGIN usart1_task */
+    /* USER CODE BEGIN usart1_task */
     uint8_t len;
     /* Infinite loop */
     for (;;)
@@ -223,11 +234,10 @@ void usart1_task(void const * argument)
         // osDelay(1);
         delay_ms(1);
     }
-  /* USER CODE END usart1_task */
+    /* USER CODE END usart1_task */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
-

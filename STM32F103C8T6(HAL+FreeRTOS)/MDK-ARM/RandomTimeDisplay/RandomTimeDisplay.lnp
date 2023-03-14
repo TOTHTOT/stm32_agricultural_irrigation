@@ -12,6 +12,7 @@
 "randomtimedisplay\stm32f1xx_hal_timebase_tim.o"
 "randomtimedisplay\key.o"
 "randomtimedisplay\led.o"
+"randomtimedisplay\dht11.o"
 "randomtimedisplay\delay.o"
 "randomtimedisplay\usart1.o"
 "randomtimedisplay\stm32f1xx_hal_gpio_ex.o"

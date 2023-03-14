@@ -53,3 +53,4 @@ randomtimedisplay\freertos.o: ../Core/Inc/usart.h
 randomtimedisplay\freertos.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\string.h
 randomtimedisplay\freertos.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdio.h
 randomtimedisplay\freertos.o: ../SYSTEM/usart/usart1.h
+randomtimedisplay\freertos.o: ..\HARDWARE\DHT11\dht11.h

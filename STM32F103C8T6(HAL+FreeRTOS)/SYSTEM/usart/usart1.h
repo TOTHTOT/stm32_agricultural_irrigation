@@ -1,10 +1,10 @@
 /*
- * @Description: ´®¿Ú1µÄÍ·ÎÄ¼þ
+ * @Description: ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Í·ï¿½Ä¼ï¿½
  * @Author: TOTHTOT
  * @Date: 2022-11-12 01:09:18
- * @LastEditTime: 2022-11-12 01:18:16
+ * @LastEditTime: 2023-03-12 20:37:49
  * @LastEditors: TOTHTOT
- * @FilePath: \MDK-ARMe:\Learn\stm32\CubeMX_Project\STM32F103C8T6\STM32F103C8T6(HAL+FreeRTOS)\HARDWARE\USART\usart1.h
+ * @FilePath: \MDK-ARMe:\JieDan\stm32_agricultural_irrigation\CODE\STM32F103C8T6(HAL+FreeRTOS)\SYSTEM\usart\usart1.h
  */
 #ifndef __USART1_H
 #define __USART1_H
@@ -23,32 +23,32 @@ extern uint8_t aRxBuffer[RXBUFFERSIZE];
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
 void u1_printf(char *format, ...);
 
-// ÊÇ·ñ¿ªÆô DEBUG Ä£Ê½, ¿ªÆô¾Í»á´®¿ÚÊä³öÈÕÖ¾
+// ï¿½Ç·ï¿½ï¿½ï¿½ DEBUG Ä£Ê½, ï¿½ï¿½ï¿½ï¿½ï¿½Í»á´®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾
 #define DEBUG_ON
 
 #ifdef DEBUG_ON
 #define INFO_PRINT(fmt, ...)                                                                  \
     do                                                                                        \
     {                                                                                         \
-        u1_printf("Info %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        printf("Info %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
     } while (0)
 
 #define WARNING_PRINT(fmt, ...)                                                                  \
     do                                                                                           \
     {                                                                                            \
-        u1_printf("Warning %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        printf("Warning %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
     } while (0)
 
 #define DEBUG_PRINT(fmt, ...)                                                                  \
     do                                                                                         \
     {                                                                                          \
-        u1_printf("Debug %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        printf("Debug %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
     } while (0)
 
 #define ERROR_PRINT(fmt, ...)                                                                  \
     do                                                                                         \
     {                                                                                          \
-        u1_printf("Error %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        printf("Error %s,%s,%d: " fmt "", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
     } while (0)
 
 #else

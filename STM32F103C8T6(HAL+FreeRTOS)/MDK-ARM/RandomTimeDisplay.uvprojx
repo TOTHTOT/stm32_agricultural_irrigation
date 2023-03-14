@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/STM32F1xx_HAL_Driver/Inc;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../HARDWARE/KEY;../HARDWARE/LED;../SYSTEM/delay;../HARDWARE/USART;../SYSTEM/usart;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/STM32F1xx_HAL_Driver/Inc;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../HARDWARE/KEY;../HARDWARE/LED;../SYSTEM/delay;../HARDWARE/USART;../SYSTEM/usart;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;..\HARDWARE\DHT11</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -610,6 +610,11 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\LED\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\DHT11\dht11.c</FilePath>
             </File>
           </Files>
         </Group>
