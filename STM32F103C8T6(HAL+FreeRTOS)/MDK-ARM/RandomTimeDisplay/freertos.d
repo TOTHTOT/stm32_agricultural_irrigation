@@ -40,11 +40,10 @@ randomtimedisplay\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_
 randomtimedisplay\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 randomtimedisplay\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 randomtimedisplay\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
-randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
-randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+randomtimedisplay\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 randomtimedisplay\freertos.o: ../SYSTEM/delay/delay.h
 randomtimedisplay\freertos.o: ../HARDWARE/LED/led.h
 randomtimedisplay\freertos.o: ../Core/Inc/gpio.h
@@ -53,4 +52,6 @@ randomtimedisplay\freertos.o: ../Core/Inc/usart.h
 randomtimedisplay\freertos.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\string.h
 randomtimedisplay\freertos.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdio.h
 randomtimedisplay\freertos.o: ../SYSTEM/usart/usart1.h
-randomtimedisplay\freertos.o: ..\HARDWARE\DHT11\dht11.h
+randomtimedisplay\freertos.o: ../HARDWARE/DHT11/dht11.h
+randomtimedisplay\freertos.o: ../HARDWARE/OLED/oled.h
+randomtimedisplay\freertos.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdlib.h

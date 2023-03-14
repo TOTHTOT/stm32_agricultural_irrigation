@@ -33,7 +33,8 @@ randomtimedisplay\usart1.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_ti
 randomtimedisplay\usart1.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 randomtimedisplay\usart1.o: ../Core/Inc/usart.h
 randomtimedisplay\usart1.o: ..\SYSTEM\usart\usart1.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 randomtimedisplay\usart1.o: ../Core/Inc/FreeRTOSConfig.h
 randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -41,12 +42,8 @@ randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/p
 randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
 randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 randomtimedisplay\usart1.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\string.h
+randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+randomtimedisplay\usart1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 randomtimedisplay\usart1.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdarg.h
 randomtimedisplay\usart1.o: E:\Keil Programma\ARM\ARMCC\Bin\..\include\stdio.h

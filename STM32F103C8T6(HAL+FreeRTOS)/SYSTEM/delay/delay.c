@@ -1,7 +1,6 @@
 #include "delay.h"
 #include "gpio.h"
  	 
-#define SYSTEM_SUPPORT_OS 1
 #if SYSTEM_SUPPORT_OS
 #include "FreeRTOS.h"					//FreeRTOS π”√		  
 #include "task.h"

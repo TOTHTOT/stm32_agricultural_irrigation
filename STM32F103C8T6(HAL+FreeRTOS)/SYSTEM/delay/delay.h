@@ -2,6 +2,7 @@
 #define __DELAY_H 			   
  
 #include "main.h"
+#define SYSTEM_SUPPORT_OS 1
 
 __STATIC_INLINE void delay_us (volatile uint32_t microseconds)
 {

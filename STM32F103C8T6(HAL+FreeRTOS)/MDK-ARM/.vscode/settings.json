@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "string.h": "c",
-        "dht11.h": "c"
+        "dht11.h": "c",
+        "delay.h": "c",
+        "oledfont.h": "c",
+        "oled.h": "c",
+        "stdlib.h": "c"
     }
 }

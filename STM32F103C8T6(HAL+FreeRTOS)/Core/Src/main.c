@@ -102,7 +102,8 @@ int main(void)
 	//HAL_UART_Receive_DMA(&huart1, (uint8_t*)USART_RX_BUF, USART_REC_LEN);     //设置DMA传输，将串口1的数据搬运到recvive_buff中，每次255个字节
   /* USER CODE END 2 */
 
-  /* Call init function for freertos objects (in freertos.c) */
+  /* Init scheduler */
+  osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */

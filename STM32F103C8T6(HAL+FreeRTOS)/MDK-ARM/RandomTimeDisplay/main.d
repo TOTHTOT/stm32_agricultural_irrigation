@@ -31,7 +31,8 @@ randomtimedisplay\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.
 randomtimedisplay\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 randomtimedisplay\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 randomtimedisplay\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 randomtimedisplay\main.o: ../Core/Inc/FreeRTOSConfig.h
 randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -39,12 +40,6 @@ randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/por
 randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
 randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-randomtimedisplay\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 randomtimedisplay\main.o: ../Core/Inc/adc.h
 randomtimedisplay\main.o: ../Core/Inc/dma.h
 randomtimedisplay\main.o: ../Core/Inc/i2c.h
