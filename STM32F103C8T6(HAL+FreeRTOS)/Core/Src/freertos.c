@@ -60,39 +60,41 @@
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
-    .name = "defaultTask",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityRealtime,
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for LED_TASK */
 osThreadId_t LED_TASKHandle;
 const osThreadAttr_t LED_TASK_attributes = {
-    .name = "LED_TASK",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityLow,
+  .name = "LED_TASK",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for USART1_TASK */
 osThreadId_t USART1_TASKHandle;
 const osThreadAttr_t USART1_TASK_attributes = {
-    .name = "USART1_TASK",
-    .stack_size = 256 * 4,
-    .priority = (osPriority_t)osPriorityLow,
+  .name = "USART1_TASK",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for SCREEN */
 osThreadId_t SCREENHandle;
 const osThreadAttr_t SCREEN_attributes = {
-    .name = "SCREEN",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityLow,
+  .name = "SCREEN",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for Usart1_Receive_BinSemaphore */
 osSemaphoreId_t Usart1_Receive_BinSemaphoreHandle;
 const osSemaphoreAttr_t Usart1_Receive_BinSemaphore_attributes = {
-    .name = "Usart1_Receive_BinSemaphore"};
+  .name = "Usart1_Receive_BinSemaphore"
+};
 /* Definitions for en_refresh_screen */
 osSemaphoreId_t en_refresh_screenHandle;
 const osSemaphoreAttr_t en_refresh_screen_attributes = {
-    .name = "en_refresh_screen"};
+  .name = "en_refresh_screen"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -107,60 +109,60 @@ void thread_screen(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
- * @brief  FreeRTOS initialization
- * @param  None
- * @retval None
- */
-void MX_FREERTOS_Init(void)
-{
-    /* USER CODE BEGIN Init */
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
 
-    /* USER CODE END Init */
+  /* USER CODE END Init */
 
-    /* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE BEGIN RTOS_MUTEX */
     /* add mutexes, ... */
-    /* USER CODE END RTOS_MUTEX */
+  /* USER CODE END RTOS_MUTEX */
 
-    /* Create the semaphores(s) */
-    /* creation of Usart1_Receive_BinSemaphore */
-    Usart1_Receive_BinSemaphoreHandle = osSemaphoreNew(1, 1, &Usart1_Receive_BinSemaphore_attributes);
+  /* Create the semaphores(s) */
+  /* creation of Usart1_Receive_BinSemaphore */
+  Usart1_Receive_BinSemaphoreHandle = osSemaphoreNew(1, 1, &Usart1_Receive_BinSemaphore_attributes);
 
-    /* creation of en_refresh_screen */
-    en_refresh_screenHandle = osSemaphoreNew(1, 1, &en_refresh_screen_attributes);
+  /* creation of en_refresh_screen */
+  en_refresh_screenHandle = osSemaphoreNew(1, 1, &en_refresh_screen_attributes);
 
-    /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
     /* add semaphores, ... */
     xSemaphoreTake(Usart1_Receive_BinSemaphoreHandle, portMAX_DELAY);
-    /* USER CODE END RTOS_SEMAPHORES */
+  /* USER CODE END RTOS_SEMAPHORES */
 
-    /* USER CODE BEGIN RTOS_TIMERS */
+  /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */
-    /* USER CODE END RTOS_TIMERS */
+  /* USER CODE END RTOS_TIMERS */
 
-    /* USER CODE BEGIN RTOS_QUEUES */
+  /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
-    /* USER CODE END RTOS_QUEUES */
+  /* USER CODE END RTOS_QUEUES */
 
-    /* Create the thread(s) */
-    /* creation of defaultTask */
-    defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
-    /* creation of LED_TASK */
-    LED_TASKHandle = osThreadNew(led_task, NULL, &LED_TASK_attributes);
+  /* creation of LED_TASK */
+  LED_TASKHandle = osThreadNew(led_task, NULL, &LED_TASK_attributes);
 
-    /* creation of USART1_TASK */
-    USART1_TASKHandle = osThreadNew(usart1_task, NULL, &USART1_TASK_attributes);
+  /* creation of USART1_TASK */
+  USART1_TASKHandle = osThreadNew(usart1_task, NULL, &USART1_TASK_attributes);
 
-    /* creation of SCREEN */
-    SCREENHandle = osThreadNew(thread_screen, NULL, &SCREEN_attributes);
+  /* creation of SCREEN */
+  SCREENHandle = osThreadNew(thread_screen, NULL, &SCREEN_attributes);
 
-    /* USER CODE BEGIN RTOS_THREADS */
+  /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-    /* USER CODE END RTOS_THREADS */
+  /* USER CODE END RTOS_THREADS */
 
-    /* USER CODE BEGIN RTOS_EVENTS */
+  /* USER CODE BEGIN RTOS_EVENTS */
     /* add events, ... */
-    /* USER CODE END RTOS_EVENTS */
+  /* USER CODE END RTOS_EVENTS */
+
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -172,10 +174,11 @@ void MX_FREERTOS_Init(void)
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-    /* USER CODE BEGIN StartDefaultTask */
+  /* USER CODE BEGIN StartDefaultTask */
     osStatus ret;
     INFO_PRINT("init oled\r\n");
     OLED_Init();
+    // g_oled_device_st.oled_show_char(0, 0, '!', 16, 1);
     g_oled_device_st.oled_show_string(0, 0, "dht11 init...", 16);
     if (dht11_init() != 0)
     {
@@ -195,7 +198,7 @@ void StartDefaultTask(void *argument)
         ERROR_PRINT("give semaphore failure![%d]\r\n", ret);
     }
     vTaskDelete(NULL);
-    /* USER CODE END StartDefaultTask */
+  /* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_led_task */
@@ -207,7 +210,7 @@ void StartDefaultTask(void *argument)
 /* USER CODE END Header_led_task */
 void led_task(void *argument)
 {
-    /* USER CODE BEGIN led_task */
+  /* USER CODE BEGIN led_task */
     BaseType_t ret = pdFALSE;
     /* Infinite loop */
     for (;;)
@@ -232,7 +235,7 @@ void led_task(void *argument)
         }
         delay_ms(500);
     }
-    /* USER CODE END led_task */
+  /* USER CODE END led_task */
 }
 
 /* USER CODE BEGIN Header_usart1_task */
@@ -244,7 +247,7 @@ void led_task(void *argument)
 /* USER CODE END Header_usart1_task */
 void usart1_task(void *argument)
 {
-    /* USER CODE BEGIN usart1_task */
+  /* USER CODE BEGIN usart1_task */
     uint8_t len;
     /* Infinite loop */
     for (;;)
@@ -257,7 +260,7 @@ void usart1_task(void *argument)
         // osDelay(1);
         delay_ms(1);
     }
-    /* USER CODE END usart1_task */
+  /* USER CODE END usart1_task */
 }
 
 /* USER CODE BEGIN Header_thread_screen */
@@ -269,7 +272,7 @@ void usart1_task(void *argument)
 /* USER CODE END Header_thread_screen */
 void thread_screen(void *argument)
 {
-    /* USER CODE BEGIN thread_screen */
+  /* USER CODE BEGIN thread_screen */
     osStatus ret;
     /* Infinite loop */
     for (;;)
@@ -279,7 +282,7 @@ void thread_screen(void *argument)
         {
             ERROR_PRINT("get semaphore failure![%d]\r\n", ret);
         }
-        /* 错误判断避免出现空指针!! */
+        /* 错误判断避免出现空指�?!! */
         if (g_oled_device_st.oled_clear_screen != NULL ||
             g_oled_device_st.updata_main_page != NULL ||
             g_oled_device_st.updata_main_page_data != NULL)
@@ -311,10 +314,11 @@ void thread_screen(void *argument)
         INFO_PRINT("oled refresh\r\n");
         osDelay(1);
     }
-    /* USER CODE END thread_screen */
+  /* USER CODE END thread_screen */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
+

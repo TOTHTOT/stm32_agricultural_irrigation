@@ -1,2 +1,3 @@
 RandomTimeDisplay
 *.o
+STM32F103C8T6(HAL+FreeRTOS)/MDK-ARM/RandomTimeDisplay/dma.o

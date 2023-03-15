@@ -2,7 +2,7 @@
  * @Description: oled 的驱动代码, 使用硬件i2c
  * @Author: TOTHTOT
  * @Date: 2023-03-14 19:06:07
- * @LastEditTime: 2023-03-14 21:11:02
+ * @LastEditTime: 2023-03-15 11:21:18
  * @LastEditors: TOTHTOT
  * @FilePath: \MDK-ARMe:\JieDan\stm32_agricultural_irrigation\CODE\STM32F103C8T6(HAL+FreeRTOS)\HARDWARE\OLED\oled.h
  */
@@ -21,6 +21,15 @@
 /* oled 显示结构体, 对屏幕的所有操作都封装在其中, 不需要去操作底层函数, 在创建变量时要对其进行初始化 */
 struct oled_device
 {
+/* 使用的I2C模式, DMA或者硬件I2C */
+#define I2C_OLED_HARDWARE
+    // #define I2C_OLED_HARDWARE_DMA 1
+
+#define USE_OLED_GRAM 0 // 使用oled显存
+#if USE_OLED_GRAM
+    uint8_t oled_gram[8][128]; // 定义模拟显存
+#endif                         /* USE_OLED_GRAM */
+
     /* 以后使用这个库只需要改动这个结构图体和 data_pos 结构体 */
     struct oled_show_data
     {
@@ -38,7 +47,7 @@ struct oled_device
         SCREEN_REFRESH_MAIN_PAGE,      // 刷新主页面
         SCREEN_REFRESH_MAIN_PAGE_DATA, // 刷新数据
         SCREEN_TOTAL_TYPE              // 总共状态
-    }oled_refresh_type_em;
+    } oled_refresh_type_em;
 #endif /* SYSTEM_SUPPORT_OS */
 
     /* 数据显示的位置, 在主页面里赋值 */
@@ -49,7 +58,7 @@ struct oled_device
     } wd_pos_st, sd_pos_st, gz_pos_st;
 
     /* 外部可以调用的函数 */
-    void (*oled_show_char)(uint8_t, uint8_t, uint8_t, uint8_t);              // 显示一个字符
+    void (*oled_show_char)(uint8_t x, uint8_t y, uint8_t chr, uint8_t size, uint8_t mode);     // 显示一个字符
     void (*oled_show_string)(uint8_t, uint8_t, const uint8_t *, uint8_t);    // 显示一个字符串
     void (*oled_show_num)(uint8_t, uint8_t, unsigned int, uint8_t, uint8_t); // 显示一个数字
     void (*oled_clear_screen)(void);                                         // 清屏

@@ -5,6 +5,8 @@
         "delay.h": "c",
         "oledfont.h": "c",
         "oled.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "cmsis_os.h": "c",
+        "string": "c"
     }
 }

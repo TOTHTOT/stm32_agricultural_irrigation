@@ -2,7 +2,7 @@
  * @Description: oled 驱动程序 使用硬件i2c
  * @Author: TOTHTOT
  * @Date: 2023-03-14 19:06:07
- * @LastEditTime: 2023-03-14 21:35:52
+ * @LastEditTime: 2023-03-15 19:40:16
  * @LastEditors: TOTHTOT
  * @FilePath: \MDK-ARMe:\JieDan\stm32_agricultural_irrigation\CODE\STM32F103C8T6(HAL+FreeRTOS)\HARDWARE\OLED\oled.c
  */
@@ -13,10 +13,9 @@
 #include "delay.h"
 #include "main.h"
 #include "i2c.h"
-
+#include "string.h"
 /* 全局变量 */
 struct oled_device g_oled_device_st = {0};
-
 
 /**
  * @name: OLED_WR_CMD
@@ -28,7 +27,14 @@ struct oled_device g_oled_device_st = {0};
  */
 void OLED_WR_CMD(uint8_t cmd)
 {
+#ifdef I2C_OLED_HARDWARE
     HAL_I2C_Mem_Write(&hi2c1, OLED_ADDER, 0x00, I2C_MEMADD_SIZE_8BIT, &cmd, 1, 0x100);
+#elif I2C_OLED_HARDWARE_DMA
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    };
+    HAL_I2C_Mem_Write_DMA(&hi2c1, OLED_ADDER, 0x00, I2C_MEMADD_SIZE_8BIT, &cmd, 1);
+#endif
 }
 
 /**
@@ -41,19 +47,15 @@ void OLED_WR_CMD(uint8_t cmd)
  */
 void OLED_WR_DATA(uint8_t data)
 {
+#ifdef I2C_OLED_HARDWARE
     HAL_I2C_Mem_Write(&hi2c1, OLED_ADDER, 0x40, I2C_MEMADD_SIZE_8BIT, &data, 1, 0x100);
+#elif I2C_OLED_HARDWARE_DMA
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    };
+    HAL_I2C_Mem_Write_DMA(&hi2c1, OLED_ADDER, 0x40, I2C_MEMADD_SIZE_8BIT, &data, 1);
+#endif
 }
-
-// OLED的显存
-// 存放格式如下.
-//[0]0 1 2 3 ... 127
-//[1]0 1 2 3 ... 127
-//[2]0 1 2 3 ... 127
-//[3]0 1 2 3 ... 127
-//[4]0 1 2 3 ... 127
-//[5]0 1 2 3 ... 127
-//[6]0 1 2 3 ... 127
-//[7]0 1 2 3 ... 127
 
 // 坐标设置
 /**
@@ -88,9 +90,56 @@ void OLED_Display_Off(void)
     OLED_WR_CMD(0XAE); // DISPLAY OFF
 }
 
+/**
+ * @name:OLED_DrawPoint
+ * @msg: oled 在显存中画点
+ * @param {uint8_t} x   x坐标
+ * @param {uint8_t} y   y坐标
+ * @param {uint8_t} t   == 1, 点亮这个点; == 0, 熄灭这个点
+ * @return {*} 无
+ * @author: TOTHTOT
+ * @date: 2023年3月15日10:58:53
+ */
+void OLED_DrawPoint(uint8_t x, uint8_t y, uint8_t t)
+{
+#if USE_OLED_GRAM
+    uint8_t pos, bx, temp = 0;
+    if (x > 127 || y > 63)
+        return; // 超出范围了.
+    pos = y / 8;
+    bx = y % 8;
+    temp = 1 << bx;
+    if (t)
+        g_oled_device_st.oled_gram[pos][x] |= temp;
+    else
+        g_oled_device_st.oled_gram[pos][x] &= ~temp;
+#endif /* USE_OLED_GRAM */
+}
+
+void OLED_Refresh_Gram(void)
+{
+	#if USE_OLED_GRAM
+    uint8_t i, n;
+    for (i = 0; i < 8; i++)
+    {
+        OLED_WR_CMD(0xb0 + i); // 设置页地址（0~7）
+        OLED_WR_CMD(0x00);     // 设置显示位置—列低地址
+        OLED_WR_CMD(0x10);     // 设置显示位置—列高地址
+        for (n = 0; n < 128; n++)
+            OLED_WR_DATA(g_oled_device_st.oled_gram[i][n]);
+    }
+	#endif /* USE_OLED_GRAM */
+}
+
 // 清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!
 void OLED_Clear()
 {
+
+#if USE_OLED_GRAM
+    uint8_t i, n;
+    memset(g_oled_device_st.oled_gram, 0, sizeof(g_oled_device_st.oled_gram));
+    OLED_Refresh_Gram();
+#else
     uint8_t i, n;
     for (i = 0; i < 8; i++)
     {
@@ -100,6 +149,7 @@ void OLED_Clear()
         for (n = 0; n < 128; n++)
             OLED_WR_DATA(0x00);
     }
+#endif /* USE_OLED_GRAM */
 }
 
 /**
@@ -109,12 +159,65 @@ void OLED_Clear()
  * @param {uint8_t} y   y坐标
  * @param {uint8_t} chr 要显示的字符
  * @param {uint8_t} Char_Size   字体大小
+ * @param {uint8_t} mode oled 点的亮灭
  * @return {*}  无
  * @author: TOTHTOT
  * @date: 2023年3月14日19:28:44
  */
-void OLED_ShowChar(uint8_t x, uint8_t y, uint8_t chr, uint8_t Char_Size)
+void OLED_ShowChar(uint8_t x, uint8_t y, uint8_t chr, uint8_t Char_Size, uint8_t mode)
 {
+#if USE_OLED_GRAM
+    uint8_t temp, t, t1;
+    uint8_t x0 = x;
+    uint8_t csize = (Char_Size / 8 + ((Char_Size % 8) ? 1 : 0)) * (Char_Size / 2); // 得到字体一个字符对应点阵集所占的字节数
+    chr = chr - ' ';                                                               // 得到偏移后的值
+    if (Char_Size == 8)
+        Char_Size = 5;
+
+    if (x > 128 - 1)
+    {
+        x = 0;
+        y = y + 2;
+    }
+    if (Char_Size == 16)
+    {
+        for (uint8_t i = 0; i < 8; i++)
+        {
+            temp = F8X16[chr * 16 + t]; // 调用1608字体
+            for (t1 = 0; t1 < 8; t1++)
+            {
+                if (temp & 0x80)
+                    OLED_DrawPoint(x, y, mode);
+                else
+                    OLED_DrawPoint(x, y, !mode);
+                temp <<= 1;
+                x++;
+            }
+        }
+        y++;
+        x = x0;
+        for (uint8_t i = 0; i < 8; i++)
+        {
+            temp = F8X16[chr * 16 + t + 8]; // 调用1608字体
+            for (t1 = 0; t1 < 8; t1++)
+            {
+                if (temp & 0x80)
+                    OLED_DrawPoint(x, y, mode);
+                else
+                    OLED_DrawPoint(x, y, !mode);
+                temp <<= 1;
+                x++;
+            }
+        }
+    }
+    OLED_Refresh_Gram();
+/*     else
+    {
+        OLED_Set_Pos(x, y);
+        for (i = 0; i < 6; i++)
+            OLED_WR_DATA(F6x8[c][i]);
+    } */
+#else
     unsigned char c = 0, i = 0;
     c = chr - ' '; // 得到偏移后的值
     if (x > 128 - 1)
@@ -137,6 +240,7 @@ void OLED_ShowChar(uint8_t x, uint8_t y, uint8_t chr, uint8_t Char_Size)
         for (i = 0; i < 6; i++)
             OLED_WR_DATA(F6x8[c][i]);
     }
+#endif
 }
 
 /**
@@ -155,7 +259,7 @@ void OLED_ShowString(uint8_t x, uint8_t y, const uint8_t *chr, uint8_t Char_Size
     unsigned char j = 0;
     while (chr[j] != '\0')
     {
-        OLED_ShowChar(x, y, chr[j], Char_Size);
+        OLED_ShowChar(x, y, chr[j], Char_Size, 1);
         x += 8;
         if (x > 120)
         {
@@ -204,13 +308,13 @@ void OLED_ShowNum(uint8_t x, uint8_t y, unsigned int num, uint8_t len, uint8_t s
         {
             if (temp == 0)
             {
-                OLED_ShowChar(x + (size2 / 2) * t, y, ' ', size2);
+                OLED_ShowChar(x + (size2 / 2) * t, y, ' ', size2, 1);
                 continue;
             }
             else
                 enshow = 1;
         }
-        OLED_ShowChar(x + (size2 / 2) * t, y, temp + '0', size2);
+        OLED_ShowChar(x + (size2 / 2) * t, y, temp + '0', size2, 1);
     }
 }
 
@@ -308,6 +412,7 @@ void main_page_data(struct oled_device *oled_st)
     OLED_ShowNum(oled_st->sd_pos_st.x, oled_st->sd_pos_st.y, oled_st->oled_data_st.dht11_p->dht11_data_humidity, 3, oled_st->oled_data_st.char_size);
     /* 显示光照数据 */
     // OLED_ShowNum(oled_st->sd_pos_st.x, oled_st->sd_pos_st.y, oled_st->oled_data_st.dht11_p->dht11_data_humidity, 3, oled_st->oled_data_st.char_size);
+    OLED_Refresh_Gram();
 }
 
 /**
@@ -334,6 +439,7 @@ void main_page(struct oled_device *oled_st)
     oled_st->gz_pos_st.y = 2;
 
     main_page_data(oled_st);
+    OLED_Refresh_Gram();
 }
 
 /**
